@@ -1,4 +1,4 @@
-.container {
+.grid {
   background-color: rgb(255, 255, 255);
   display: grid;
   grid-template-columns: 200px 200px 200px;
@@ -9,7 +9,7 @@
   border: 2px solid rgb(0, 0, 0);
 }
 
-.container > button {
+.grid > button {
   font-size: 7rem;
   font-family: 'Kanit', sans-serif;
   font-weight: 300;
