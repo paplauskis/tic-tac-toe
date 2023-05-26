@@ -9,7 +9,7 @@ const GameBoard = (() => {
 
   const getGameBoard = () => gameBoard;
   const updateBoard = (index, marker) => gameBoard[index] = marker;
-  const resetBoard = () => gameBoard.fill(''); /*= ['','','','','','','','',''];*/
+  const resetBoard = () => gameBoard.fill('');
 
   return { getGameBoard, updateBoard, resetBoard };
 })();
@@ -28,20 +28,24 @@ let activePlayer = playerOne;
 const switchPlayer = () => {
   activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
   switchTurnDiv.textContent = activePlayer.turn();
-  
 }
 
 const getMarker = (e) => {
   const index = e.target.dataset.value;
   const marker = activePlayer.getMarker();
-  GameBoard.updateBoard(index, marker);
-  appendMarker();
-  switchPlayer();
+  if (GameBoard.getGameBoard()[index] === '') {
+    GameBoard.updateBoard(index, marker);
+    appendMarker();
+    switchPlayer();
+    console.log(GameBoard.getGameBoard())
+  } else {
+    switchTurnDiv.textContent = `${activePlayer.getName()}, you can't mark a marked spot!`;
+  }
 }
 
 const appendMarker = () => {
   let index = 0;
-    for(let marker of GameBoard.getGameBoard()) {
+    for (let marker of GameBoard.getGameBoard()) {
       cellsNodeListArray[index].textContent = marker;
       index++;
   }
@@ -53,8 +57,6 @@ const clearBoard = () => {
   activePlayer = playerOne;
   switchTurnDiv.textContent = activePlayer.turn();
 }
-
-
 
 cellsNodeList.forEach(cell => {
   cell.addEventListener('click', getMarker);
