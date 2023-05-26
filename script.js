@@ -34,17 +34,9 @@ const switchPlayer = () => {
 const getMarker = (e) => {
   const index = e.target.dataset.value;
   const marker = activePlayer.getMarker();
+  cellsNodeListArray[index].textContent = marker;
   GameBoard.updateBoard(index, marker);
-  appendMarker();
   switchPlayer();
-}
-
-const appendMarker = () => {
-  let index = 0;
-    for(let marker of GameBoard.getGameBoard()) {
-      cellsNodeListArray[index].textContent = marker;
-      index++;
-  }
 }
 
 const clearBoard = () => {
