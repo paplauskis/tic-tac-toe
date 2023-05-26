@@ -1,4 +1,6 @@
 const grid = document.querySelector('.grid');
+const switchTurnDiv = document.querySelector('.switch-turn');
+const restartGameButton = document.querySelector('.restart-game');
 const cellsNodeList = document.querySelectorAll('.cell');
 const cellsNodeListArray = [...cellsNodeList];
 
@@ -7,7 +9,7 @@ const GameBoard = (() => {
 
   const getGameBoard = () => gameBoard;
   const updateBoard = (index, marker) => gameBoard[index] = marker;
-  const resetBoard = () => gameBoard = ['','','','','','','','',''];
+  const resetBoard = () => gameBoard.fill(''); /*= ['','','','','','','','',''];*/
 
   return { getGameBoard, updateBoard, resetBoard };
 })();
@@ -15,27 +17,47 @@ const GameBoard = (() => {
 const player = (name, marker) => {
   const getName = () => name;
   const getMarker = () => marker;
-  const startGame = () => `${name} starts the game!`;
-  return { getName, getMarker, startGame };
+  const turn = () => `${name}'s turn!`;
+  return { getName, getMarker, turn };
 }
-// const koste = player('koste', 'X')
-// const eva = player('eva', 'O')
+
+const playerOne = player('X', '❌');
+const playerTwo = player('O', '⭕️');
+let activePlayer = playerOne;
+
+const switchPlayer = () => {
+  activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
+  switchTurnDiv.textContent = activePlayer.turn();
+  
+}
+
+const getMarker = (e) => {
+  const index = e.target.dataset.value;
+  const marker = activePlayer.getMarker();
+  GameBoard.updateBoard(index, marker);
+  appendMarker();
+  switchPlayer();
+}
 
 const appendMarker = () => {
   let index = 0;
-  for(let marker of GameBoard.getGameBoard()) {
-    cellsNodeListArray[index].textContent = marker;
-    index++;
+    for(let marker of GameBoard.getGameBoard()) {
+      cellsNodeListArray[index].textContent = marker;
+      index++;
   }
 }
 
-const addMarker = (e) => {
-  const index = e.target.dataset.value;
-  const marker = 'X';
-  GameBoard.updateBoard(index, marker);
+const clearBoard = () => {
+  GameBoard.resetBoard();
   appendMarker();
+  activePlayer = playerOne;
+  switchTurnDiv.textContent = activePlayer.turn();
 }
 
+
+
 cellsNodeList.forEach(cell => {
-  cell.addEventListener('click', addMarker);
+  cell.addEventListener('click', getMarker);
 })
+
+restartGameButton.addEventListener('click', clearBoard);
