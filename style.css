@@ -1,27 +1,104 @@
+:root {
+  --border: 3px solid rgb(80, 117, 149);
+  --font: 'Tsukimi Rounded', sans-serif;
+}
+
+html {
+  font-family: var(--font);
+  background-color: aliceblue;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-family: var(--font);
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
 .grid {
-  background-color: rgb(255, 255, 255);
+  background-color: transparent;
   display: grid;
   grid-template-columns: 200px 200px 200px;
   grid-template-rows: 200px 200px 200px;
   justify-self: center;
   width: 600px;
   margin: auto;
-  border: 2px solid rgb(0, 0, 0);
+  margin-top: 30px;
 }
 
 .grid > button {
-  font-size: 7rem;
+  font-size: 4rem;
   font-family: 'Kanit', sans-serif;
   font-weight: 300;
+  color: rgb(55, 55, 55);
   justify-self: center;
   align-self: center;
-  border: 2px solid black;
+  border: none;
   width: 200px;
   height: 200px;
   text-align: center;
   padding: 0;
+  margin: 0;
+  background-color: transparent;
 }
 
-h1 {
+.grid > button:nth-child(4),
+.grid > button:nth-child(6) {
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.grid > button:nth-child(5) {
+  border: var(--border)
+}
+
+.grid > button:nth-child(2),
+.grid > button:nth-child(8) {
+  border-left: var(--border);
+  border-right: var(--border);
+}
+
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.restart-game {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 247px;
+  height: 60px;
+  font-family: var(--font);
+  font-size: 1rem;
+  border-radius: 15px;
+  border: none;
+  background: rgb(80, 117, 149);
+  border: 2px solid rgb(80, 117, 149);
+  transition: background 0.5s;
+}
+
+.restart-game:hover {
+  background: transparent;
+  cursor: pointer;
+}
+
+.restart-game:active {
+  background-color: rgb(80, 117, 149);
+}
+
+.switch-turn {
+  /* background-color: rgb(248, 127, 127); */
+  margin: auto;
   text-align: center;
+  font-size: 1.8rem;
+  width: 200px;
+  height: 40px;
 }
