@@ -35,9 +35,8 @@ const getMarker = (e) => {
   const marker = activePlayer.getMarker();
   if (GameBoard.getGameBoard()[index] === '') {
     GameBoard.updateBoard(index, marker);
-    appendMarker();
     switchPlayer();
-    console.log(GameBoard.getGameBoard())
+    appendMarker();
   } else {
     switchTurnDiv.textContent = `${activePlayer.getName()}, you can't mark a marked spot!`;
   }
@@ -49,6 +48,7 @@ const appendMarker = () => {
       cellsNodeListArray[index].textContent = marker;
       index++;
   }
+  checkWinner()
 }
 
 const clearBoard = () => {
@@ -56,6 +56,36 @@ const clearBoard = () => {
   appendMarker();
   activePlayer = playerOne;
   switchTurnDiv.textContent = activePlayer.turn();
+  switchTurnDiv.classList.remove('winner-div');
+}
+
+const checkWinner = () => {
+  const b = GameBoard.getGameBoard()
+  if (
+      b[0] == '❌' && b[1] == '❌' && b[2] == '❌' || b[3] == '❌' && b[4] == '❌' && b[5] == '❌' || 
+      b[6] == '❌' && b[7] == '❌' && b[8] == '❌' || b[0] == '❌' && b[3] == '❌' && b[6] == '❌' || 
+      b[1] == '❌' && b[4] == '❌' && b[7] == '❌' || b[2] == '❌' && b[5] == '❌' && b[8] == '❌' ||
+      b[0] == '❌' && b[4] == '❌' && b[8] == '❌' || b[2] == '❌' && b[4] == '❌' && b[6] == '❌' ) 
+    {
+      switchTurnDiv.classList.add('winner-div');
+      switchTurnDiv.textContent = `${playerOne.getName()} wins!`;
+    } else if (
+      b[0] == '⭕️' && b[1] == '⭕️' && b[2] == '⭕️' || b[3] == '⭕️' && b[4] == '⭕️' && b[5] == '⭕️' || 
+      b[6] == '⭕️' && b[7] == '⭕️' && b[8] == '⭕️' || b[0] == '⭕️' && b[3] == '⭕️' && b[6] == '⭕️' || 
+      b[1] == '⭕️' && b[4] == '⭕️' && b[7] == '⭕️' || b[2] == '⭕️' && b[5] == '⭕️' && b[8] == '⭕️' ||
+      b[0] == '⭕️' && b[4] == '⭕️' && b[8] == '⭕️' || b[2] == '⭕️' && b[4] == '⭕️' && b[6] == '⭕️' ) 
+    {
+      switchTurnDiv.classList.add('winner-div');
+      switchTurnDiv.textContent = `${playerTwo.getName()} wins!`;
+    } else if (
+      b[0] != '' && b[1] != '' && b[2] != '' && 
+      b[3] != '' && b[4] != '' && b[5] != '' && 
+      b[6] != '' && b[7] != '' && b[8] != '' ) 
+    {
+      switchTurnDiv.classList.add('winner-div');
+      switchTurnDiv.textContent = `It is a draw!`;
+    }
+    
 }
 
 cellsNodeList.forEach(cell => {
