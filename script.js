@@ -1,8 +1,17 @@
 const grid = document.querySelector('.grid');
 const switchTurnDiv = document.querySelector('.switch-turn');
 const restartGameButton = document.querySelector('.restart-game');
+const playerScoreboard = document.querySelector('.player-scores');
 const cellsNodeList = document.querySelectorAll('.cell');
 const cellsNodeListArray = [...cellsNodeList];
+let playerOneScore = 0;
+let playerTwoScore = 0;
+const divPlayerOneScore = document.createElement('div');
+divPlayerOneScore.textContent = `X score: ${playerOneScore}`;
+playerScoreboard.appendChild(divPlayerOneScore);
+const divPlayerTwoScore = document.createElement('div');
+divPlayerTwoScore.textContent = `O score: ${playerTwoScore}`;
+playerScoreboard.appendChild(divPlayerTwoScore);
 const clickSound = new Audio('assets/click-sound.mp3');
 clickSound.volume = 0.05;
 const gameEndSound = new Audio('assets/game-end.mp3');
@@ -41,15 +50,15 @@ const getMarker = (e) => {
   } else {
     switchTurnDiv.textContent = `${activePlayer.getName()}, you can't mark a marked spot!`;
   }
-  clickSound.play();
 }
 
 const appendMarker = () => {
   let index = 0;
-    for (let marker of GameBoard.getGameBoard()) {
-      cellsNodeListArray[index].textContent = marker;
-      index++;
+  for (let marker of GameBoard.getGameBoard()) {
+    cellsNodeListArray[index].textContent = marker;
+    index++;
   }
+  clickSound.play();
   checkWinner();
 }
 
@@ -71,8 +80,10 @@ const checkWinner = () => {
     {
       switchTurnDiv.classList.add('winner-div');
       switchTurnDiv.textContent = `${playerOne.getName()} wins!`;
+      playerOneScore++;
+      divPlayerOneScore.textContent = `X score: ${playerOneScore}`;
       gameEndSound.play();
-      setTimeout(clearBoard, 3000);
+      setTimeout(clearBoard, 5000);
     } else if (
       b[0] == '⭕️' && b[1] == '⭕️' && b[2] == '⭕️' || b[3] == '⭕️' && b[4] == '⭕️' && b[5] == '⭕️' || 
       b[6] == '⭕️' && b[7] == '⭕️' && b[8] == '⭕️' || b[0] == '⭕️' && b[3] == '⭕️' && b[6] == '⭕️' || 
@@ -81,8 +92,10 @@ const checkWinner = () => {
     {
       switchTurnDiv.classList.add('winner-div');
       switchTurnDiv.textContent = `${playerTwo.getName()} wins!`;
+      playerTwoScore++;
+      divPlayerTwoScore.textContent = `O score: ${playerTwoScore}`;
       gameEndSound.play();
-      setTimeout(clearBoard, 3000);
+      setTimeout(clearBoard, 5000);
     } else if (
       b[0] != '' && b[1] != '' && b[2] != '' && 
       b[3] != '' && b[4] != '' && b[5] != '' && 
@@ -92,7 +105,6 @@ const checkWinner = () => {
       switchTurnDiv.textContent = `It is a draw!`;
       setTimeout(clearBoard, 3000);
     }
-    
 }
 
 cellsNodeList.forEach(cell => {
