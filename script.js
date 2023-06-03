@@ -4,9 +4,9 @@ const restartGameButton = document.querySelector('.restart-game');
 const cellsNodeList = document.querySelectorAll('.cell');
 const cellsNodeListArray = [...cellsNodeList];
 const clickSound = new Audio('assets/click-sound.mp3');
-clickSound.volume = 0.2;
+clickSound.volume = 0.05;
 const gameEndSound = new Audio('assets/game-end.mp3');
-gameEndSound.volume = 0.5;
+gameEndSound.volume = 0.1;
 
 const GameBoard = (() => {
   let gameBoard = ['','','','','','','','',''];
@@ -50,7 +50,7 @@ const appendMarker = () => {
       cellsNodeListArray[index].textContent = marker;
       index++;
   }
-  checkWinner()
+  checkWinner();
 }
 
 const clearBoard = () => {
@@ -72,6 +72,7 @@ const checkWinner = () => {
       switchTurnDiv.classList.add('winner-div');
       switchTurnDiv.textContent = `${playerOne.getName()} wins!`;
       gameEndSound.play();
+      setTimeout(clearBoard, 3000);
     } else if (
       b[0] == '⭕️' && b[1] == '⭕️' && b[2] == '⭕️' || b[3] == '⭕️' && b[4] == '⭕️' && b[5] == '⭕️' || 
       b[6] == '⭕️' && b[7] == '⭕️' && b[8] == '⭕️' || b[0] == '⭕️' && b[3] == '⭕️' && b[6] == '⭕️' || 
@@ -81,6 +82,7 @@ const checkWinner = () => {
       switchTurnDiv.classList.add('winner-div');
       switchTurnDiv.textContent = `${playerTwo.getName()} wins!`;
       gameEndSound.play();
+      setTimeout(clearBoard, 3000);
     } else if (
       b[0] != '' && b[1] != '' && b[2] != '' && 
       b[3] != '' && b[4] != '' && b[5] != '' && 
@@ -88,7 +90,7 @@ const checkWinner = () => {
     {
       switchTurnDiv.classList.add('winner-div');
       switchTurnDiv.textContent = `It is a draw!`;
-      gameEndSound.play()
+      setTimeout(clearBoard, 3000);
     }
     
 }
