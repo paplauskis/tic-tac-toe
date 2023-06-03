@@ -110,3 +110,9 @@ h1 {
 .winner-div {
  color: rgb(0, 192, 0);
 }
+
+.player-scores {
+  position: absolute;
+  top: 110px;
+  right: 90px;
+}
